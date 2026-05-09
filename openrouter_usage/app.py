@@ -474,7 +474,8 @@ class UsageApp(App[None]):
                 label_plain = base
             column.label = Text(label_plain, no_wrap=True, end="")
             if column.auto_width:
-                column.content_width = measure(console, column.label, 1)
+                label_render_width = measure(console, column.label, 1)
+                column.content_width = max(column.content_width, label_render_width)
         table.refresh()
 
     def _apply_sort_for_column_index(self, column_index: int) -> None:

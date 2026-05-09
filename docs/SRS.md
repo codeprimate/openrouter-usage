@@ -1,7 +1,7 @@
 # Software Requirements Specification: openrouter-usage
 
 **Version:** 0.1.6  
-**Living document:** update with intentional spec or code changes. Historical planning snapshot: `CURSOR_PLAN.md` (read-only archive).
+**Living document:** update with intentional spec or code changes.
 
 ## 1. Purpose
 

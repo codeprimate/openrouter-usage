@@ -9,7 +9,6 @@ Python 3.11+ terminal UI (Textual) that calls the OpenRouter **management** API 
 ## Requirements: SRS first
 
 - **Canonical spec:** `docs/SRS.md` — versioned, living requirements (FR/NFR, UX, API assumptions, acceptance smoke).
-- **Planning archive only:** `docs/CURSOR_PLAN.md` — historical snapshot; do not treat it as the current contract when it conflicts with `docs/SRS.md` or the code.
 - **SRS management:** When you change user-visible behavior, API usage, or acceptance criteria, update `docs/SRS.md` in the same change set. Bump the **Version** line when the spec meaningfully moves. Keep FR/NFR and acceptance criteria aligned with what `pytest` and manual smoke would verify.
 
 ## Workflow (before you edit)

@@ -101,6 +101,29 @@ class HelpScreen(ModalScreen[None]):
 class ActivityTable(DataTable):
     """Built-in header only; column cursor is for sort — restore cell cursor when focus leaves."""
 
+    def _on_mouse_move(self, event: events.MouseMove) -> None:
+        """Match DataTable hover logic but enable hover only after a valid cell meta.
+
+        Upstream calls `_set_hover_cursor(True)` before reading `event.style.meta`, which
+        refreshes the previous `hover_coordinate` under hover styling. That extra pass can
+        destabilize column layout (visible flicker) when the table is short, e.g. filtered rows.
+        """
+        meta = event.style.meta
+        if not meta:
+            self._set_hover_cursor(False)
+            return
+        if self.cursor_type != "row" and meta.get("out_of_bounds", False):
+            self._set_hover_cursor(False)
+            return
+        if self.show_cursor and self.cursor_type != "none":
+            try:
+                self.hover_coordinate = Coordinate(meta["row"], meta["column"])
+            except KeyError:
+                return
+            self._set_hover_cursor(True)
+        else:
+            self._set_hover_cursor(False)
+
     def _on_blur(self, event: events.Blur) -> None:
         self.cursor_type = "cell"
         super()._on_blur(event)

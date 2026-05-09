@@ -5,6 +5,8 @@
 
 A small **terminal app** for OpenRouter: see recent usage, your API keys list, and account credits.
 
+![openrouter-usage in the terminal: credits header, key scope, and activity table by UTC day](docs/openrouter-usage-ss.webp)
+
 ## Install
 
 You need **Python 3.11 or newer**. Then:

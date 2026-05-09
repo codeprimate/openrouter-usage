@@ -15,9 +15,19 @@ pip install git+https://github.com/codeprimate/openrouter-usage.git
 
 ## Usage
 
+### Create a management API key
+
+This app uses OpenRouter's **management** API. You need a **management API key**, not a normal model API key. Management keys are for admin reads (activity, keys, credits). They **cannot** call chat completion endpoints.
+
+1. Open **[Management API Keys](https://openrouter.ai/settings/management-keys)** while signed in.
+2. Click **Create New Key** (or the equivalent on that page).
+3. Finish the flow and **copy the key once**. Store it like any secret. If you lose it, create a new management key and revoke the old one from the same settings page.
+
+Official reference: [Management API Keys](https://openrouter.ai/docs/guides/overview/auth/management-api-keys).
+
 ### Run it
 
-OpenRouter expects a **management** key (the one you use for account management in the dashboard, not a model API key).
+OpenRouter expects that **management** key in the environment or on the command line (see below). Do not use a standard API key from the Keys page for model calls.
 
 Put it in your shell so the app can see it. Use **`export`** so it applies to the command you run next:
 
@@ -39,7 +49,11 @@ You can also start with `python -m openrouter_usage`. For flags and version: `op
 - **Account credits** at the top.
 - An **API key** menu: view **all keys** together or pick **one key**. The numbers match the last time you pressed **r** to refresh. If you change the menu and a warning says the data is old, press **r** again.
 - A **totals** line that adds up only the rows still showing after you filter.
-- A **table** of activity: mostly **by calendar day** (in UTC), with model and provider. OpenRouter sends about the **last 30 finished UTC days**; **today** might not appear until that day is included on their side. At first the table is sorted with **older days above** and **newer days below**. You can change that with sorting (below).
+- A **table** of activity: **UTC calendar day** rows with model and provider (about the **last 30 days** OpenRouter returns). Default sort is **older days above**, **newer below**. Use **Change the sort order** to change that.
+
+### Activity data timing (limitation)
+
+All activity rows come from OpenRouter's management API **`GET /api/v1/activity`**. That endpoint only includes **finished UTC calendar days**. The **current UTC day is often missing** until OpenRouter publishes that day's aggregates. Pressing **r** only refetches the same API. It **cannot** fill in "today" early. This app does **not** pull request logs or per-call history to reconstruct intraday usage.
 
 Press **?** inside the app for a full key list and short labels for the columns (requests, spend, dollars per request, token columns).
 
